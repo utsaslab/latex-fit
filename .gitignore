@@ -1,0 +1,16 @@
+# LaTeX extra files
+*.aux
+*.bbl
+*.bib
+*.blg
+*.fdb_latexmk
+*.fls
+*.log
+*.out
+*.synctex.gz
+*.alg
+
+# Python extra files
+__pycache__
+*.pyc
+*.pyo

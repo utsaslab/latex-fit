@@ -1,0 +1,34 @@
+# Example configuration file
+
+floats:
+  - textfloatsep: 12pt
+  - floatsep: 10pt
+  - intextsep: 10pt
+  - dltextfloatsep: default
+  - dlfloatsep: default
+equations:
+  abovedisplayskip: default
+  belowdisplayskip: default
+  abovedisplayshortskip: default
+  belowdisplayshortskip: default
+paragraphs:
+  parskip: 0pt
+  parindent: 2pt
+lists:
+  compact-items: Yes
+  compact-enums: Yes
+headings:
+  section:
+    left: 0pt
+    below: 1.5ex
+    above: 2ex
+  subsection:
+    left: 0pt
+    above: 2ex
+    below: 1ex
+  subsubsection:
+    left: 0pt
+    above: 1.5ex
+    below: 1ex
+line-spread: 0.95
+
