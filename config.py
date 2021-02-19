@@ -56,6 +56,13 @@ class Config:
     def apply_to(self, doc):
         if self.compact_items or self.compact_enums:
             doc.add_package('paralist')
+        if self.compact_items:
+            doc.replace_in_body('\\begin{itemize}', '\\begin{compactitem}')
+            doc.replace_in_body('\\end{itemize}', '\\end{compactitem}')
+        if self.compact_items:
+            doc.replace_in_body('\\begin{enumerate}', '\\begin{compactenum}')
+            doc.replace_in_body('\\end{enumerate}', '\\end{compactenum}')
+
         if len(self.headings) > 0:
             doc.add_package('titlesec', 'compact')
         header_opts = self.floats + self.equations + self.paragraphs + self.headings + self.line_spread

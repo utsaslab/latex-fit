@@ -55,7 +55,7 @@ class LatexDoc:
             # If a comment or empty line, we group them together (in
             # case this surrounds a document marker)
             if line.strip().startswith('%') or len(line.strip()) == 0:
-                commented_lines += line
+                commented_lines += [line]
                 continue
 
             # Find the commands which split the document into its main parts
@@ -66,13 +66,13 @@ class LatexDoc:
             elif '\\begin{document}' in line:
                 curr_list = self.document
             elif '\\end{document}' in line:
-                curr_list += line
+                curr_list += [line]
                 curr_list = self.footer
                 continue
             if len(commented_lines) > 0:
                 curr_list += commented_lines
                 commented_lines = []
-            curr_list += line
+            curr_list += [line]
 
     def output_to(self, out):
         full_doc = ['% ~~~~~ PREAMBLE ~~~~~\n']
@@ -95,4 +95,23 @@ class LatexDoc:
     
     def add_header_opt(self, opt):
         self.header_commands += [opt]
+    
+    def add_body_command(self, target_line, before_command, after_command):
+        new_doc = []
+        for line in self.document:
+            if target_line in line:
+                if before_command:
+                    new_doc += [before_command]
+                new_doc += [line]
+                if after_command:
+                    new_doc += [after_command]
+            else:
+                new_doc += [line]
+        self.document = new_doc
+
+    def replace_in_body(self, target, replacement):
+        new_doc = []
+        for line in self.document:
+            new_doc += [line.replace(target, replacement)]
+        self.document = new_doc
 
