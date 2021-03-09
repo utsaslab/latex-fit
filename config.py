@@ -52,6 +52,26 @@ class Config:
         if 'line-spread' in self.config:
             spread_factor = self.config['line-spread']
         self.line_spread = [LatexCommand('linespread', [], str(spread_factor))]
+
+        self.caption_opts = []
+        if 'captions' in self.config:
+            if 'above-skip' in self.config['captions']:
+                aboveskip = self.config['captions']['above-skip']
+                if aboveskip != 'default':
+                    self.caption_opts += [f'above-skip={aboveskip}']
+            if 'below-skip' in self.config['captions']:
+                belowskip = self.config['captions']['below-skip']
+                if belowskip != 'default':
+                    self.caption_opts += [f'below-skip={belowskip}'] 
+            if 'skip' in self.config['captions']:
+                skip = self.config['captions']['skip']
+                if skip != 'default':
+                    self.caption_opts += [f'skip={skip}']
+            if 'font' in self.config['captions']:
+                font = self.config['captions']['font']
+                if font != 'default':
+                    self.caption_opts += [f'font={font}']
+
         
     def apply_to(self, doc):
         if self.compact_items or self.compact_enums:
@@ -65,6 +85,9 @@ class Config:
 
         if len(self.headings) > 0:
             doc.add_package('titlesec', 'compact')
+
+        if len(self.caption_opts) > 0:
+            doc.add_package('caption', ','.join(self.caption_opts))
         header_opts = self.floats + self.equations + self.paragraphs + self.headings + self.line_spread
         for opt in header_opts:
             doc.add_header_opt(opt)

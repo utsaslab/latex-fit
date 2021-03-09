@@ -31,4 +31,9 @@ headings:
     above: 1.5ex
     below: 1ex
 line-spread: 0.95
+captions:
+  font: small
+  skip: 5pt
+  above-skip: default
+  below-skip: default
 
