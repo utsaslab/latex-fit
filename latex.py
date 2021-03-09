@@ -46,7 +46,10 @@ class LatexDoc:
         self.extra_packages = []
         # Commands we add to the header of the document
         self.header_commands = []
+        # Packages being used in the document
+        self.packages = []
         self.read_doc()
+        self.read_packages()
 
     def read_doc(self):
         curr_list = self.preamble
@@ -73,6 +76,14 @@ class LatexDoc:
                 curr_list += commented_lines
                 commented_lines = []
             curr_list += [line]
+    
+    def read_packages(self):
+        for line in self.header:
+            if '\\usepackage' in line:
+                # line is something like \usepackage{pkgname}...
+                open_brack = line.find('{')
+                close_brack = line.find('}')
+                self.packages += [line[open_brack+1:close_brack]]
 
     def output_to(self, out):
         full_doc = ['% ~~~~~ PREAMBLE ~~~~~\n']
@@ -91,7 +102,8 @@ class LatexDoc:
             out.write(str(line))
     
     def add_package(self, package, packageOpts=[]):
-        self.extra_packages += [LatexCommand('usepackage', packageOpts, package)]
+        if not package in self.packages:
+            self.extra_packages += [LatexCommand('usepackage', packageOpts, package)]
     
     def add_header_opt(self, opt):
         self.header_commands += [opt]
